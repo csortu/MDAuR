@@ -16,10 +16,10 @@ library(org.Hs.eg.db)
 
 immunome<-read.csv("human_gene_set.txt")
 
-goannot2<-select(org.Hs.eg.db,keys=immunome$EntrezGeneID,cols="GO",keytype="ENTREZID")
+goannot2<-select(org.Hs.eg.db,keys=as.character(immunome$EntrezGeneID),columns="GO",keytype="ENTREZID")
 
-pathannot<-select(org.Hs.eg.db,keys=immunome$EntrezGeneID,cols="PATH",keytype="ENTREZID")
+pathannot<-select(org.Hs.eg.db,keys=as.character(immunome$EntrezGeneID),columns="PATH",keytype="ENTREZID")
 
-clannot<-select(org.Hs.eg.db,keys=immunome$EntrezGeneID,cols="CHRLOC",keytype="ENTREZID")
+clannot<-select(org.Hs.eg.db,keys=as.character(immunome$EntrezGeneID),columns="CHRLOC",keytype="ENTREZID")
 
 keytypes(org.Hs.eg.db)
