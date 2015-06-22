@@ -1,7 +1,7 @@
 library(ShortRead)
-projectDir <- '/data1/Omixon/target_brca_example'
-#setwd(fastqDir)
-#fastqFiles <- dir(fastqDir, full=TRUE)
+
+projectDir <- getwd() # set the directory here to where you opened /home/ortutay/tmp/1
+
 fastqFiles <- list.files(path=projectDir,pattern="*.fastq",full.names=T)
 
 fq <- readFastq(fastqFiles[1])
@@ -43,8 +43,8 @@ table(as.vector(unlist(sread(fq))))
 # Quality control
 
 library(ShortRead)
-fastqDir <- '/data1/Omixon/target_brca_example'
-fastqFiles <- list.files(path=fastqDir,pattern="*.fastq",full.names=T)
+projectDir <- getwd() # set the directory here to where you opened /home/ortutay/tmp/1
+fastqFiles <- list.files(path=projectDir,pattern="*.fastq",full.names=T)
 fq <- readFastq(fastqFiles[1])
 
 
@@ -159,30 +159,3 @@ trim.file <- function(fl, destination=sprintf("%s_filtered.fastq", fl)){
 }
 
 trim.file(fastqFiles[1])
-
-
-## > myFilterAndTrim <-
-## + function(fl, destination=sprintf("%s_subset", fl))
-## + {
-## + ## open input stream
-## + stream <- open(FastqStreamer(fl))
-## + on.exit(close(stream))
-## +
-## + repeat {
-## + ## input chunk
-## + fq <- yield(stream)
-## + if (length(fq) == 0)
-## + break
-## +An Introduction to ShortRead 5
-## + ## trim and filter, e.g., reads cannot contain ✬N✬...
-## + fq <- fq[nFilter()(fq)] # see ?srFilter for pre-defined filters
-## + ## trim as soon as 2 of 5 nucleotides has quality encoding less
-## + ## than "4" (phred score 20)
-## + fq <- trimTailw(fq, 2, "4", 2)
-## + ## drop reads that are less than 36nt
-## + fq <- fq[width(fq) < 36] # should be  >  36 !!!!
-## +
-## + ## append to destination
-## + writeFastq(fq, destination, "a")
-## + }
-## + }
