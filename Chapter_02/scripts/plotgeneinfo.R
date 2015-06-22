@@ -26,7 +26,7 @@ snpmart <- useMart("snp",dataset="hsapiens_snp")
 
 #snps<-getBM(c('refsnp_id','allele','chrom_start','clinical_significance'),filters = c('chr_name','chrom_start','chrom_end'), values = list(my.gene$chromosome_name,my.gene$start_position,my.gene$end_position), mart = snpmart)
 
-snps<-getBM(c('refsnp_id','allele','chrom_start'),filters = c('chr_name','chrom_start','chrom_end'), values = list(my.gene$chromosome_name,my.gene$start_position,my.gene$end_position), mart = snpmart)
+snps<-getBM(c('refsnp_id','allele','chrom_start'),filters = c('chr_name','start','end'), values = list(my.gene$chromosome_name,my.gene$start_position,my.gene$end_position), mart = snpmart)
 
 
 snpannot<-makeAnnotationTrack(start=snps$chrom_start,end=snps$chrom_start)
