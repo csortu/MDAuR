@@ -3,7 +3,7 @@ target_set<-read.csv("human_gene_selected_set.txt")
 
 
 library(org.Hs.eg.db)
-goannot2<-select(org.Hs.eg.db,keys=immunome$EntrezGeneID,cols="GO",keytype="ENTREZID")
+goannot2<-select(org.Hs.eg.db, keys=as.character(immunome$EntrezGeneID), columns="GO", keytype="ENTREZID")
 
 # Prepare the gene GO annotation in proper format into gene2GO
 
@@ -30,12 +30,12 @@ library(topGO)
 
 GOdata.MF <- new("topGOdata", ontology = "MF", description="MF on innate immunity genes",allGenes = geneList, annot =annFUN.gene2GO, gene2GO = gene2GO)
 
-resultFisher.MF.classic <- runTest(GOdata, algorithm = "classic", statistic = "fisher")
-allRes.MF.classic <- GenTable(GOdata, classicFisher = resultFisher.MF.classic,topNodes=20)
+resultFisher.MF.classic <- runTest(GOdata.MF, algorithm = "classic", statistic = "fisher")
+allRes.MF.classic <- GenTable(GOdata.MF, classicFisher = resultFisher.MF.classic,topNodes=20)
 
-resultFisher.MF.weight <- runTest(GOdata, algorithm = "weight", statistic = "fisher")
-allRes.MF.weight <- GenTable(GOdata, classicFisher = resultFisher.MF.weight,topNodes=20)
+resultFisher.MF.weight <- runTest(GOdata.MF, algorithm = "weight", statistic = "fisher")
+allRes.MF.weight <- GenTable(GOdata.MF, classicFisher = resultFisher.MF.weight,topNodes=20)
 
-resultFisher.MF.parentchild <- runTest(GOdata, algorithm = "parentchild", statistic = "fisher")
-allRes.MF.parentchild <- GenTable(GOdata, classicFisher = resultFisher.MF.parentchild,topNodes=20)
+resultFisher.MF.parentchild <- runTest(GOdata.MF, algorithm = "parentchild", statistic = "fisher")
+allRes.MF.parentchild <- GenTable(GOdata.MF, classicFisher = resultFisher.MF.parentchild,topNodes=20)
 
