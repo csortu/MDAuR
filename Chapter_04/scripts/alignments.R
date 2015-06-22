@@ -1,6 +1,6 @@
 library(GenomicAlignments)
 
-projectDir <- '/data1/Omixon/target_brca_example'
+projectDir <- getwd() # set the directory here to where you opened /home/ortutay/tmp/1
 alnFiles <- list.files(path=projectDir,pattern="*bowtie2.bam",full.names=T)
 
 ## Note: if you are using Bioconductor version 14, paired with R 3.1, you should also load the following library. You do not need to load this library, and it will not be available to you, if you are using Bioconductor version 13, paired with R 3.0.x.
@@ -29,6 +29,7 @@ table(seqnames(aln2))
 
 # see the distribution of original fragment lengths
 isProperPair(aln2)
+aln2.p<-aln2[isProperPair(aln2)]
 plot(density(end(ranges(right(aln2.p)))-start(ranges(left(aln2.p)))),main="Fragment length distribution")
 
 
@@ -37,33 +38,6 @@ cov2
 
 mean(cov2$chr17)
 max(cov2$chr17)
-
-# where are the high coverage places on the chr17?
-
-## library(zoo)
-## cov <- as.integer(cov2$chr17)
-## cov.window <- rollapply(cov,width=window,mean,by=window/2)
-
-## window <- 100000
-## cov.window <- vector("numeric",length=as.integer(length(cov2$chr17)/window))
-
-## for(i in 1: length(cov.window)){
-##   cov.window[i] <- mean(cov2$chr17[(i-1)*window+1:i*window])
-## }
-
-## plotCoverage <- function(x, chrom, start=1, end=length(x[[chrom]]), col="blue",
-##  xlab="Index", ylab="Coverage", main=chrom) {
-##   xWindow <- as.vector(window(x[[chrom]], start, end))
-##   x <- start:end
-##   xlim <- c(start, end)
-##   ylim <- c(0, max(xWindow))
-##   plot(x = start, y = 0, xlim = xlim, ylim = ylim,
-##        xlab = xlab, ylab = ylab, main = main, type = "n")
-##   polygon(c(start, x, end), c(0, xWindow, 0), col = col)
-##  }
-
-## plotCoverage(cov2,"chr17")
-
 
 large.range <- slice(cov2$chr17, lower=10)
 large.range.region <- data.frame(position=start(large.range):end(large.range),coverage=as.integer(large.range[[1]]))
@@ -86,7 +60,6 @@ plot(as.integer(hq.ranges[[10]]), type="l",main="Coverage of peak 10")
 
 #peaks <- GRanges(seqnames=paste('peak',1:length(hq.ranges),sep="."),ranges=IRanges(start=start(hq.ranges),end=end(hq.ranges)),strand='-')
 peaks <- GRanges(seqnames='chr17',ranges=IRanges(start=start(hq.ranges),end=end(hq.ranges)),strand='*')
-
 
 
 library(TxDb.Hsapiens.UCSC.hg18.knownGene)
