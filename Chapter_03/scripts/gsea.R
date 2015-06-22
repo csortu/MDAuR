@@ -2,7 +2,7 @@ mouse_genes<-read.csv("mouse_ranked_gene_set.txt")
 
 library(org.Mm.eg.db)
 
-pathannot<-select(org.Mm.eg.db,keys=mouse_genes$EntrezGeneID,cols="PATH",keytype="ENTREZID")
+pathannot<-select(org.Mm.eg.db, keys=as.character(mouse_genes$EntrezGeneID), columns="PATH",keytype="ENTREZID")
 pathannot<-pathannot[complete.cases(pathannot),]
 
 bigpaths<-names(table(pathannot$PATH)[table(pathannot$PATH)>100])
