@@ -36,7 +36,7 @@ gdPlot(list(makeTitle("Human furin gene"), makeIdeogram(chromosome = 15), gene, 
 
 # create custom annotation
 
-customann<-makeAnnotationTrack(start=c(91413322,91413852,91424100),end=c(91413422,91414252,91426100),feature=c('bind','bind','del'),dp = DisplayPars(bind = 'blue',del='red'))
+customann<-makeAnnotationTrack(start=c(90876557,90876757,90878557),end=c(90876597,90876897,90878697),feature=c('bind','bind','del'),dp = DisplayPars(bind = 'blue',del='red'))
 
 
 gdPlot(list(makeTitle("Human furin gene"), makeIdeogram(chromosome = 15), gene, transcript, snpannot,customann,makeGenomeAxis()))
