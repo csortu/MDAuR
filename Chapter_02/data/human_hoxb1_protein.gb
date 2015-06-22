@@ -1,0 +1,158 @@
+LOCUS       NP_002135                301 aa            linear   PRI 26-JAN-2014
+DEFINITION  homeobox protein Hox-B1 [Homo sapiens].
+ACCESSION   NP_002135
+VERSION     NP_002135.2  GI:24497526
+DBSOURCE    REFSEQ: accession NM_002144.3
+KEYWORDS    RefSeq.
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (residues 1 to 301)
+  AUTHORS   Webb BD, Shaaban S, Gaspar H, Cunha LF, Schubert CR, Hao K, Robson
+            CD, Chan WM, Andrews C, MacKinnon S, Oystreck DT, Hunter DG,
+            Iacovelli AJ, Ye X, Camminady A, Engle EC and Jabs EW.
+  TITLE     HOXB1 founder mutation in humans recapitulates the phenotype of
+            Hoxb1-/- mice
+  JOURNAL   Am. J. Hum. Genet. 91 (1), 171-179 (2012)
+   PUBMED   22770981
+  REMARK    GeneRIF: The resulting phenotype includes bilateral facial palsy,
+            hearing loss, and strabismus and correlates extensively with the
+            previously reported Hoxb1(-/-) mouse phenotype.
+REFERENCE   2  (residues 1 to 301)
+  AUTHORS   Gouti M, Briscoe J and Gavalas A.
+  TITLE     Anterior Hox genes interact with components of the neural crest
+            specification network to induce neural crest fates
+  JOURNAL   Stem Cells 29 (5), 858-870 (2011)
+   PUBMED   21433221
+  REMARK    GeneRIF: Hoxb1 Expression Induces Cell Fate Changes in the Trunk
+            Neural Tube.
+REFERENCE   3  (residues 1 to 301)
+  AUTHORS   Song RR, Zou L, Zhong R, Zheng XW, Zhu BB, Chen W, Liu L and Miao
+            XP.
+  TITLE     An integrated meta-analysis of two variants in HOXA1/HOXB1 and
+            their effect on the risk of autism spectrum disorders
+  JOURNAL   PLoS ONE 6 (9), E25603 (2011)
+   PUBMED   21980499
+  REMARK    GeneRIF: HOXA1 A218G and HOXB1 nINS/INS variants may not contribute
+            significantly to autism spectrum disorders risk
+REFERENCE   4  (residues 1 to 301)
+  AUTHORS   Lian P, Liu LA, Shi Y, Bu Y and Wei D.
+  TITLE     Tethered-hopping model for protein-DNA binding and unbinding based
+            on Sox2-Oct1-Hoxb1 ternary complex simulations
+  JOURNAL   Biophys. J. 98 (7), 1285-1293 (2010)
+   PUBMED   20371328
+  REMARK    GeneRIF: analysis of a tethered-hopping model for protein-DNA
+            binding and unbinding based on Sox2-Oct1-Hoxb1 ternary complex
+            simulations
+REFERENCE   5  (residues 1 to 301)
+  AUTHORS   Muscarella LA, Guarnieri V, Sacco R, Curatolo P, Manzi B,
+            Alessandrelli R, Giana G, Militerni R, Bravaccio C, Lenti C,
+            Saccani M, Schneider C, Melmed R, D'Agruma L and Persico AM.
+  TITLE     Candidate gene study of HOXB1 in autism spectrum disorder
+  JOURNAL   Mol Autism 1 (1), 9 (2010)
+   PUBMED   20678259
+  REMARK    GeneRIF: Observational study of gene-disease association and
+            gene-gene interaction. (HuGE Navigator)
+            Publication Status: Online-Only
+REFERENCE   6  (residues 1 to 301)
+  AUTHORS   Miano JM, Firulli AB, Olson EN, Hara P, Giachelli CM and Schwartz
+            SM.
+  TITLE     Restricted expression of homeobox genes distinguishes fetal from
+            adult human smooth muscle cells
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 93 (2), 900-905 (1996)
+   PUBMED   8570656
+REFERENCE   7  (residues 1 to 301)
+  AUTHORS   Apiou F, Flagiello D, Cillo C, Malfoy B, Poupon MF and Dutrillaux
+            B.
+  TITLE     Fine mapping of human HOX gene clusters
+  JOURNAL   Cytogenet. Cell Genet. 73 (1-2), 114-115 (1996)
+   PUBMED   8646877
+REFERENCE   8  (residues 1 to 301)
+  AUTHORS   Guazzi S, Lonigro R, Pintonello L, Boncinelli E, Di Lauro R and
+            Mavilio F.
+  TITLE     The thyroid transcription factor-1 gene is a candidate target for
+            regulation by Hox proteins
+  JOURNAL   EMBO J. 13 (14), 3339-3347 (1994)
+   PUBMED   7913891
+REFERENCE   9  (residues 1 to 301)
+  AUTHORS   Acampora D, D'Esposito M, Faiella A, Pannese M, Migliaccio E,
+            Morelli F, Stornaiuolo A, Nigro V, Simeone A and Boncinelli E.
+  TITLE     The human HOX gene family
+  JOURNAL   Nucleic Acids Res. 17 (24), 10385-10402 (1989)
+   PUBMED   2574852
+REFERENCE   10 (residues 1 to 301)
+  AUTHORS   Boncinelli E, Acampora D, Pannese M, D'Esposito M, Somma R, Gaudino
+            G, Stornaiuolo A, Cafiero M, Faiella A and Simeone A.
+  TITLE     Organization of human class I homeobox genes
+  JOURNAL   Genome 31 (2), 745-756 (1989)
+   PUBMED   2576652
+COMMENT     REVIEWED REFSEQ: This record has been curated by NCBI staff. The
+            reference sequence was derived from X16666.1 and AC103702.3.
+            This sequence is a reference standard in the RefSeqGene project.
+            On Nov 3, 2002 this sequence version replaced gi:4504463.
+            
+            Summary: This gene belongs to the homeobox family of genes. The
+            homeobox genes encode a highly conserved family of transcription
+            factors that play an important role in morphogenesis in all
+            multicellular organisms. Mammals possess four similar homeobox gene
+            clusters, HOXA, HOXB, HOXC and HOXD, located on different
+            chromosomes, consisting of 9 to 11 genes arranged in tandem. This
+            gene is one of several homeobox HOXB genes located in a cluster on
+            chromosome 17. [provided by RefSeq, Jul 2008].
+            
+            Publication Note:  This RefSeq record includes a subset of the
+            publications that are available for this gene. Please see the Gene
+            record to access additional publications.
+            
+            ##Evidence-Data-START##
+            Transcript exon combination :: X16666.1, CN264618.1 [ECO:0000332]
+            ##Evidence-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..301
+                     /organism="Homo sapiens"
+                     /db_xref="taxon:9606"
+                     /chromosome="17"
+                     /map="17q21.3"
+     Protein         1..301
+                     /product="homeobox protein Hox-B1"
+                     /note="homeobox protein Hox-2I"
+                     /calculated_mol_wt=32062
+     Region          179..184
+                     /region_name="Antp-type hexapeptide"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="propagated from UniProtKB/Swiss-Prot (P14653.2)"
+     Region          207..253
+                     /region_name="homeodomain"
+                     /note="Homeodomain;  DNA binding domains involved in the
+                     transcriptional regulation of key eukaryotic developmental
+                     processes; may bind to DNA as monomers or as homo- and/or
+                     heterodimers, in a sequence-specific manner; cd00086"
+                     /db_xref="CDD:28970"
+     Site            order(207..208,210,227,233,246,248..249,252..253)
+                     /site_type="DNA binding"
+                     /note="DNA binding site [nucleotide binding]"
+                     /db_xref="CDD:28970"
+     Site            order(209,249,252..253)
+                     /site_type="other"
+                     /note="specific DNA base contacts [nucleotide binding]"
+                     /db_xref="CDD:28970"
+     CDS             1..301
+                     /gene="HOXB1"
+                     /gene_synonym="HCFP3; Hox-2.9; HOX2; HOX2I"
+                     /coded_by="NM_002144.3:7..912"
+                     /db_xref="CCDS:CCDS32675.1"
+                     /db_xref="GeneID:3211"
+                     /db_xref="HGNC:5111"
+                     /db_xref="MIM:142968"
+ORIGIN      
+        1 mdynrmnsfl eyplcnrgps aysahsapts fppssaqavd syasegrygg glsspafqqn
+       61 sgypaqqpps tlgvpfpssa psgyapaacs psygpsqyyp lgqsegdggy fhpssygaql
+      121 gglsdgygag gagpgpyppq hppygneqta sfapayadll sedketpcps epntptartf
+      181 dwmkvkrnpp ktakvsepgl gspsglrtnf ttrqltelek efhfnkylsr arrveiaatl
+      241 elnetqvkiw fqnrrmkqkk rereegrvpp appgcpkeaa gdasdqstct speaspssvt
+      301 s
+//
+
