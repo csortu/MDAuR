@@ -11,6 +11,6 @@ git clone https://github.com/csortu/MDAuR
 
 To update the content in an existing directory:
 
-git fetch https://github.com/csortu/MDAuR
+git pull https://github.com/csortu/MDAuR
 
 
