@@ -61,18 +61,28 @@ text(c(Ct.undil,Ct.dil5,Ct.dil25,Ct.dil125),2500,labels=c(paste("Ct =",Ct.undil)
 
 library(RDML)
 
+## This is for RDML version before ver 0.8-4 (2015-04-19)
+## calib <- RDML("calibration.rdml")
+## plot(1:40,calib$qPCR$"18s RNA"$unkn[,14],type="l",main="KO")
+## lines(1:40,calib$qPCR$"18s RNA"$unkn[,17],col="red")
+## lines(1:40,calib$qPCR$"18s RNA"$unkn[,20],col="blue")
+## lines(1:40,calib$qPCR$"18s RNA"$unkn[,23],col="green")
 
-calib <- RDML("calibration.rdml")
-naive <- RDML("qPCR_data_naive_18S_IL2.rdml")
+## naive <- RDML("qPCR_data_naive_18S_IL2.rdml")
+## matplot(naive$qPCR$"18s"$unkn[,2:40],type="l")
+## names(naive)
 
-matplot(naive$qPCR$"18s"$unkn[,2:40],type="l")
 
-names(naive)
 
-plot(1:40,calib$qPCR$"18s RNA"$unkn[,14],type="l",main="KO")
-lines(1:40,calib$qPCR$"18s RNA"$unkn[,17],col="red")
-lines(1:40,calib$qPCR$"18s RNA"$unkn[,20],col="blue")
-lines(1:40,calib$qPCR$"18s RNA"$unkn[,23],col="green")
+naive.rdml <- RDML$new("qPCR_data_naive_18S_IL2.rdml")
+naive.info <- naive.rdml$AsTable()
+str(naive.info)
+naive.info$fdata.name
+naive.info$sample
+naive.info$target
+naive.info$position
+naive.rdml$GetFData(naive.info,data.type="mdp")
+matplot(naive.rdml$GetFData(naive.info[naive.info$target=="18s",],data.type="adp"),type="l")
 
 
 ## model18S<-modlist(calib$qPCR$"18s RNA"$unkn,fluo=2:24)
@@ -172,12 +182,28 @@ boxplot(preds$predconc,main="Predictions of sample concentrations",xlab="Samples
 # Relative quantification with ratiocalc
 
 library(RDML)
-naive <- RDML("qPCR_data_naive_18S_IL2.rdml")
+
+##  # old RDML version
+## naive <- RDML("qPCR_data_naive_18S_IL2.rdml")
+## # two conditions only
+## sel.dat<-cbind(naive$qPCR$"18s"$unkn[,c(1,7,19,38,8,20,39)],naive$qPCR$"IL-2"$unkn[,c(2,16,28,3,17,29)])
+## names(sel.dat)<-c("Cycles","18s.wt.1","18s.wt.2","18s.wt.3","18s.ko.1","18s.ko.2","18s.ko.3","Il2.wt.1","Il2.wt.2","Il2.wt.3","Il2.ko.1","Il2.ko.2","Il2.ko.3")
+
+
+naive.rdml <- RDML$new("qPCR_data_naive_18S_IL2.rdml")
+naive.info <- naive.rdml$AsTable()
+
+#naive.rdml$GetFData(naive.info[grepl("(koA)|(wt)",naive.info$sample),],data.type="adp")
+#naive.info[grepl("(koA 4 h)|(wt 4 h)",naive.info$sample),]
+
+sel.info <- naive.info[grep("(koA 4 h)|(wt 4 h)",naive.info$sample),]
+sel.info <- sel.info[order(sel.info$target,sel.info$sample),]
+
+sel.dat <- naive.rdml$GetFData(sel.info,data.type="adp")
+colnames(sel.dat)
+
 
 library(qpcR)
-# two conditions only
-sel.dat<-cbind(naive$qPCR$"18s"$unkn[,c(1,7,19,38,8,20,39)],naive$qPCR$"IL-2"$unkn[,c(2,16,28,3,17,29)])
-names(sel.dat)<-c("Cycles","18s.wt.1","18s.wt.2","18s.wt.3","18s.ko.1","18s.ko.2","18s.ko.3","Il2.wt.1","Il2.wt.2","Il2.wt.3","Il2.ko.1","Il2.ko.2","Il2.ko.3")
 
 sel.mod <- modlist(sel.dat,fluo=2:13)
 
@@ -186,8 +212,9 @@ sel.mod <- modlist(sel.dat,fluo=2:13)
 
 sel.pars <- pcrbatch(sel.mod)
 
-replicates <- c("rc","rc","rc","rs","rs","rs","gc","gc","gc","gs","gs","gs")
+## replicates <- c("rc","rc","rc","rs","rs","rs","gc","gc","gc","gs","gs","gs")
 
+replicates <- c("rs", "rs", "rs", "rc", "rc", "rc", "gs","gs", "gs", "gc", "gc", "gc")
 sel.ratio <- ratiocalc(sel.pars,group=replicates,type.eff = "mean.single")
 
 summary(sel.ratio)
@@ -195,48 +222,51 @@ sel.ratio$summary
 
 # all data with two genes, two conditions: wt and koA + koB (replicates) at different time points: 0h, 4h, 12h three technical replicates for most conditions WT 0h is used as universal calibrator condition
 
-all.dat <- cbind(naive$qPCR$"18s"$unkn[,c(1,         # Cycle count
-                                          5,17,29,   # WT    0h
-                                          7,19,38,   # WT    4h
-                                          10,22,31,  # WT   12h
-                                          6,18,30,   # KO A  0h
-                                          8,20,39,   # KO A  4h
-                                          11,23,32,  # KO A 12h
-                                          2,3,4,     # KO B  0h
-                                          9,21,14,   # KO B  4h
-                                          12,24,33   # KO B 12h
-                                          )],
-                 naive$qPCR$"IL-2"$unkn[,c(5,14,26,  # WT    0h
-                                           2,16,28,  # WT    4h
-                                           7,19,31,  # WT   12h
-                                           6,15,27,  # KO A  0h
-                                           3,17,29,  # KO A  4h
-                                           8,20,32,  # KO A 12h
-                                           38,39,40, # KO B  0h
-                                           4,18,30,  # KO B  4h
-                                           9,21,33   # KO B 12h
-                                           )])
+all.info <- naive.info[grep("(24 h)|(48 h)",naive.info$sample,invert=T),]
+all.info$sample <- sub(" 4 h"," 04 h",all.info$sample)
+all.info <- all.info[order(all.info$target,all.info$sample),]
+all.info[,5:7]
+all.dat <- naive.rdml$GetFData(all.info,data.type="adp")
+colnames(all.dat)
 
-#all.dat <- cbind(naive$qPCR$"18s"$unkn[,c(1,5,17,29,7,19,38,10,22,31,6,18,30,8,20,39,11,23,32,2,3,4,9,21,40,12,24,33)],naive$qPCR$"IL-2"$unkn[,c(5,14,26,2,16,28,7,19,31,6,15,27,3,17,29,8,20,32,38,39,40,4,18,30,9,21,33)])
 
-names(all.dat) <- c("Cycle",paste(rep(c("18s","Il2"),each=27),".",rep(c("WT","KoA","KoB"),each=9),".",rep(c("0h","4h","12h"),each=3),".",1:3,sep=""))
+## old RDML version
+## all.dat <- cbind(naive$qPCR$"18s"$unkn[,c(1,         # Cycle count
+##                                           5,17,29,   # WT    0h
+##                                           7,19,38,   # WT    4h
+##                                           10,22,31,  # WT   12h
+##                                           6,18,30,   # KO A  0h
+##                                           8,20,39,   # KO A  4h
+##                                           11,23,32,  # KO A 12h
+##                                           2,3,4,     # KO B  0h
+##                                           9,21,14,   # KO B  4h
+##                                           12,24,33   # KO B 12h
+##                                           )],
+##                  naive$qPCR$"IL-2"$unkn[,c(5,14,26,  # WT    0h
+##                                            2,16,28,  # WT    4h
+##                                            7,19,31,  # WT   12h
+##                                            6,15,27,  # KO A  0h
+##                                            3,17,29,  # KO A  4h
+##                                            8,20,32,  # KO A 12h
+##                                            38,39,40, # KO B  0h
+##                                            4,18,30,  # KO B  4h
+##                                            9,21,33   # KO B 12h
+##                                            )])
+
+## names(all.dat) <- c("Cycle",paste(rep(c("18s","Il2"),each=27),".",rep(c("WT","KoA","KoB"),each=9),".",rep(c("0h","4h","12h"),each=3),".",1:3,sep=""))
 
 all.mod <- modlist(all.dat,fluo=2:55)
 all.pars <- pcrbatch(all.mod)
 
-groups2 <- paste(c(rep("r1",27),rep("g1",27)),rep(c(paste("c",1:3,sep=""),paste("s",1:6,sep="")),each=3),sep="")
+##groups2 <- paste(c(rep("r1",27),rep("g1",27)),rep(c(paste("s",1:6,sep=""),paste("c",1:3,sep="")),each=3),sep="")
 
-#groups <- paste(c(rep("r1",27),rep("g1",27)),rep(c("c1",paste("s",1:8,sep="")),each=3),sep="")
+groups2 <- paste(c(rep("r1",27), rep("g1",27)), rep(c(paste("s",1:6,sep=""), paste("c",1:3,sep="")), each=3), sep="")
 
-#all.ratio <- ratiobatch(all.pars,group=groups,combs="same")
 
 all.ratio2 <- ratiobatch(all.pars,group=groups2,combs="same")
 
 all.res2<-all.ratio2$resDat[,c(1,5,9,10,14,18)]
 dimnames(all.res2)[[2]] <- c("KO A  0h","KO A  4h","KO A 12h","KO B  0h","KO B  4h","KO B 12h")
-
-#all.res<-all.ratio$resDat
-#dimnames(all.res)[[2]] <- c("WT  4h","WT 12h","KO A  0h","KO A  4h","KO A 12h","KO B  0h","KO B  4h","KO B 12h")
 
 dev.off()
 plot(1:3-0.1,all.res2[7,1:3],ylim=c(min(all.res2[11,]),max(all.res2[12,])),main="IL-2 activation in KO mice",xaxt="n",xlab="Time after activation",ylab="IL-2 expression in KO/WT",xlim=c(0.5,3.5))
@@ -253,15 +283,23 @@ legend(2.8,1.5,c("KO A","KO B"),text.col=c("black","blue"),lty=1,col=c("black","
 
 library(RDML)
 
-naive <- RDML("qPCR_data_naive_18S_IL2.rdml")
+## Old RDML version
+## naive <- RDML("qPCR_data_naive_18S_IL2.rdml")
+## melt <- meltcurve(naive$Melt$"18s"$unkn[,c(1,2)],cut.Area =10)
 
-melt <- meltcurve(naive$Melt$"18s"$unkn[,c(1,2)],cut.Area =10)
+naive.rdml <- RDML$new("qPCR_data_naive_18S_IL2.rdml")
+naive.info <- naive.rdml$AsTable()
+naive <- naive.rdml$GetFData(naive.info,data.type="mdp")
+
+library(qpcR)
+
+melt <- meltcurve(naive[,c(1,2)],cut.Area =10)
 
 head(melt[[1]])
 melt[[1]]$Tm[1]
 
 
-meltlist <- meltcurve(naive$Melt$"18s"$unkn[,as.vector(rbind(rep(1,39),2:40))])
+meltlist <- meltcurve(naive[,as.vector(rbind(rep(1,39),2:40))])
 
 for (i in 1:length(meltlist)){
   print(meltlist[[i]]$Tm[ which(meltlist[[i]]$Area==max(meltlist[[i]]$Area,na.rm=T))])
