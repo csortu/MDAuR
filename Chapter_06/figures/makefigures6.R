@@ -46,3 +46,20 @@ plotPCA(matexp, groups = as.numeric(pData(dat)[,3]), groupnames = levels(pData(d
 
 dev.off()
 
+genotype <- factor(pData(dat)[,2] , levels = levels(pData(dat)[,2]))
+design <- model.matrix(~genotype)
+
+library(limma)
+fit <-lmFit(matexp,design)
+fit <-eBayes(fit)
+
+mouse.annot <- read.table("GPL11180_selected_annotation.txt")
+selected <- p.adjust(fit$p.value[, 2],method="fdr") <0.03
+matexp.gen <- matexp[selected,]
+colnames(matexp.gen) <- paste0("Array",1:12)
+row.names(matexp.gen) <- rep("",234)
+
+CairoTIFF("figure6_5_col.tif",width=5,height=5,units="in",res=1200)
+heatmap(matexp.gen,ylab="Probes")
+dev.off()
+
