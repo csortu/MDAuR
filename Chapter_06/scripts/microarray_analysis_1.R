@@ -45,7 +45,7 @@ boxplot(log2(exprs(dat)),main="Before normalization",ylab="log2(Intensity)")
 boxplot(matexp,main="RMA normalizaed data")
 par(mfrow=c(1,1))
 
-MAplot(datrma[,1:4],pairs=TRUE,plot.method="smoothScatter")
+#MAplot(datrma[,1:4],pairs=TRUE,plot.method="smoothScatter")
 
 
 
