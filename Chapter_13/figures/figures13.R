@@ -22,4 +22,3 @@ text(500,110,"Wavelength shift",adj=0.5,cex=0.8)
 
 dev.off()
 
-
