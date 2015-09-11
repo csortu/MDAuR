@@ -71,4 +71,29 @@ mtext("B", side = 3, line = 0, adj = 0, cex = 1.3)
 
 dev.off()
 
+## figure 13.3
 
+library(flowCore)
+library(flowViz)
+library(plotrix)
+
+fcs<-read.FCS("Cells_300 000.fcs")
+
+my.dat <- exprs(fcs)[,1:2]
+my.dat <- my.dat/10
+
+tiff("figure13_3.tif",width=5,height=5,units="in",res=1200)
+
+plot(my.dat[1:100000,],
+     pch=20,
+     cex=0.2,main="Human peripherial blood cells",
+     col=gray(0.2))
+draw.ellipse(9000,14000,6000,3000,angle = 100,lwd=3)
+draw.ellipse(17000,6000,4000,2000,angle = 0,lwd=3)
+draw.ellipse(13000,2700,4000,1000,angle = 15,lwd=3)
+
+text(12000,22000,labels = "Granulocytes")
+text(18000,10000,labels = "Monocytes")
+text(9000,5500,labels = "Lymophocytes")
+
+dev.off()
