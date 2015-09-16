@@ -102,5 +102,8 @@ library(gplots)
 my.palette <-rev(redgreen(75))
 
 tiff("figure7_4_color.tif",width=5,height=5,units="in",res=1200)
-heatmap.2(log2(as.matrix(counts[rownames(gsign),]+1)),col=my.palette,margins=c(10,12))
+heatmap.2(log2(as.matrix(counts[rownames(gsign),]+1)),
+          col=my.palette,
+          margins=c(8,1),
+          key = F)
 dev.off()
