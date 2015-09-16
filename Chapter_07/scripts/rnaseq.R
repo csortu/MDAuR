@@ -186,7 +186,12 @@ abline(0,1,lty=2)
 # simple differential expression
 
 genediff.ds <- nbinomTest(count.set,"Control","HNRNPC knockdown")
-plotMA(genediff.ds)
+#plotMA(genediff.ds)  this is sometimes broken
+
+plot(log2FoldChange ~ baseMean,data=genediff.ds[genediff.ds$padj>0.1,], log="x",xlab="Mean of normalized counts", ylab="log fold change", main="MA plot", pch=20)
+abline(h=0,lwd=2,col="red")
+points(genediff.ds[genediff.ds$padj<0.1, c("baseMean","log2FoldChange")], col="red")
+
 
 gsign.ds <- genediff.ds[genediff.ds$padj<0.03,]
 gsign.ds <- gsign.ds[order(gsign.ds$padj),]
@@ -211,8 +216,8 @@ diff.exp[is.infinite(diff.exp$DESeq),]<--2
 library(gplots) 
 my.palette <-rev(redgreen(75))
 
-# full dataset
-heatmap.2(log2(as.matrix(counts+1)),col=my.palette,margins=c(10,12))
+# full dataset with edgeR results
+heatmap.2(log2(as.matrix(counts[rownames(gsign),]+1)),col=my.palette,margins=c(10,12))
 
 # Behaviour of differentially expressed genes
 heatmap.2(as.matrix(diff.exp),Colv=F,col=my.palette,margins = c(12, 10))
