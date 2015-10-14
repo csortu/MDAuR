@@ -111,13 +111,14 @@ dev.off()
 
 tiff("figure12_6.tif",width=5,height=5,units="in",res=1200)
 par(xaxt="n")
-boxplot(undil.conc ~ time + genotype, 
-        data=measured.data[measured.data$treatment=="Tr1",], 
+boxplot(undil.conc ~ time + genotype + treatment, 
+        data=measured.data, 
         log="y", 
         main="IL-2 production of T-cells in FURIN WT/KO mice", 
         ylab="IL-2 [pg/ml]")
-lablist <- rep(c("4h","24h","48h"),2)
-text(1:6, 4, labels = lablist, srt = 0, pos = 1, xpd = TRUE)
-lablist <- rep(c("KO","WT"),each=3)
-text(1:6, 8, labels = lablist, srt = 0, pos = 1, xpd = TRUE)
+lablist <- rep(c("4h","24h","48h"),4)
+text(1:12, 2, labels = lablist, srt = 0, pos = 1, xpd = TRUE)
+lablist <- rep(rep(c("KO","WT"),each=3),2)
+text(1:12, 4, labels = lablist, srt = 0, pos = 1, xpd = TRUE)
+text(c(3,9),8, labels=c("treatment = 10+10","treatment = Tr1"), srt = 0, pos = 1, xpd = TRUE)
 dev.off() 
