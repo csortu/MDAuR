@@ -11,7 +11,7 @@ plot(g.human,vertex.label=NA, vertex.size=sample(1:5, vcount(g.human), replace=T
 
 list.edge.attributes(g.human)
 E(g.human)$lty<-1
-E(g.human)$lty[E(g.human)$weight<mean(E(g.human)$weight)]<-3
+E(g.human)$lty[log(E(g.human)$weight)<mean(log(E(g.human)$weight))]<-3
 plot(g.human,vertex.label=NA,vertex.size=5)
 
 par(mfrow=c(2,2))

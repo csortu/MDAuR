@@ -103,6 +103,7 @@ dev.off()
 
 ## figure 10.6
 
+gw<-read.graph("PredictedInteractions1000000.ncol",format="ncol")
 
 tiff("figure10_6.tif",width=5,height=5,units="in",res=1200)
 par(mfrow=c(1,2),mai=c(0,0,0.4,0))
@@ -239,4 +240,90 @@ vulnerability<-function(graph){
   return(vuln)
 }
 
+V(g.arabid)$vuln<-vulnerability(g.arabid)
+V(g.arabid)$color <- rev(gray(1:100/100))[cut(V(g.arabid)$vuln, 100)]
+V(g.arabid)$label.color <- gray(1:100/100)[cut(V(g.arabid)$vuln, 100)]
 
+tiff("figure10_10.tif",width=5,height=5,units="in",res=1200)
+par(mai=c(0,0,0,0))
+plot(g.arabid,
+     vertex.shape='rectangle',
+     vertex.size=30,vertex.size2=15,
+     edge.arrow.width=0.5,
+     edge.color="black")
+dev.off()
+
+## figure 10.11
+
+gw<-read.graph("PredictedInteractions1000000.ncol",format="ncol")
+V(gw)$cluster<-clusters(gw)$membership
+g.human<-delete.vertices(gw,V(gw)$cluster!=2)
+g.human<-simplify(g.human)
+
+V(g.human)$cc<-transitivity(g.human,type="local")
+#V(g.human)$color<-rev(redgreen(100))[cut(V(g.human)$cc, 100)]
+V(g.human)$color <- "white"
+V(g.human)[which(V(g.human)$cc>0.6)]$color <- "black"
+
+# tiff("figure10_11.tif",width=5,height=5,units="in",res=1200)
+# par(mai=c(0,0,0,0))
+# plot(g.human,vertex.size=5, vertex.label=NA)
+# dev.off()
+
+
+g.human$layout <- layout.fruchterman.reingold(g.human)
+V(g.human)$color <- "white"
+
+fc.b<-fastgreedy.community(g.human)
+wc.h<-walktrap.community(g.human)
+sc.h<-spinglass.community(g.human)
+
+tiff("figure10_11_color.tif",width=5,height=5,units="in",res=1200)
+par(mfrow=c(2,2),mai=c(0,0,0,0))
+plot(g.human,vertex.label=NA, vertex.size=5)
+mtext("A", side = 3, line = -2, adj = 0.01, cex = 1.3)
+plot(fc.b,g.human,vertex.label=NA, vertex.size=5)
+mtext("B", side = 3, line = -2, adj = 0.01, cex = 1.3)
+plot(wc.h,g.human,vertex.label=NA, vertex.size=5)
+mtext("C", side = 3, line = -2, adj = 0.01, cex = 1.3)
+plot(sc.h,g.human,vertex.label=NA, vertex.size=5)
+mtext("D", side = 3, line = -2, adj = 0.01, cex = 1.3)
+dev.off()
+
+## figure 10.12
+
+gw<-read.graph("PredictedInteractions1000000.ncol",format="ncol")
+V(gw)$cluster<-clusters(gw)$membership
+g.human<-simplify(delete.vertices(gw,V(gw)$cluster!=2))
+V(g.human)$color <- "grey"
+
+g.human$layout <- layout.fruchterman.reingold(g.human)
+
+tiff("figure10_12.tif",width=5,height=5,units="in",res=1200)
+par(mfrow=c(1,1),mai=c(0,0,0,0))
+plot(g.human,vertex.label=NA, vertex.size=sample(1:5, vcount(g.human), replace=T))
+dev.off()
+
+## figure 10.13
+
+E(g.human)$lty<-1
+E(g.human)$lty[log(E(g.human)$weight)<mean(log(E(g.human)$weight))]<-3
+
+tiff("figure10_13.tif",width=5,height=5,units="in",res=1200)
+par(mfrow=c(1,1),mai=c(0,0,0,0))
+plot(g.human,vertex.label=NA,vertex.size=5,edge.color="black",edge.width=3)
+dev.off()
+
+## figure 10.14
+
+tiff("figure10_14.tif",width=5,height=5,units="in",res=1200)
+par(mfrow=c(2,2),mai=c(0,0,0,0))
+plot(g.human,vertex.label=NA,vertex.size=5,layout=layout.random)
+mtext("A", side = 3, line = -2, adj = 0.01, cex = 1.3)
+plot(g.human,vertex.label=NA,vertex.size=5,layout=layout.circle)
+mtext("B", side = 3, line = -2, adj = 0.01, cex = 1.3)
+plot(g.human,vertex.label=NA,vertex.size=5,layout=layout.kamada.kawai)
+mtext("C", side = 3, line = -2, adj = 0.01, cex = 1.3)
+plot(g.human,vertex.label=NA,vertex.size=5,layout=layout.reingold.tilford)
+mtext("D", side = 3, line = -2, adj = 0.01, cex = 1.3)
+dev.off()
