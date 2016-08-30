@@ -61,7 +61,7 @@ abline(elisa.st.lm,lty=2)
 legend("topleft",
        c("linear model","Four-parameter logistic model"),
        bty="n",
-       lty=c(1,2))
+       lty=c(2,1))
 dev.off()
 
 ## figure 12.5

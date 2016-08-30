@@ -82,7 +82,7 @@ scale.not.set <- sqrt(sum(gene.set)/(length(gene.set) - sum(gene.set)))
 
 RES<-cumsum(gene.set*scale.set-not.gene.set*scale.not.set)
 
-CairoTIFF("figure3_2.tif",width=5,height=5,units="in",res=1200)
+CairoTIFF("figure3_3.tif",width=5,height=5,units="in",res=1200)
 
 plot(RES,type="l",main="Pathways in cancer",xlab="Genes in order")
 
