@@ -7,7 +7,7 @@ my.data<-openMSfile(msfile)
 plist<-peaks(my.data,7)
 
 tiff("figure11_1.tif",width=5,height=5,units="in",res=1200)
-plot(plist, type="h", xlab="m/z",ylab="Intensity",main="Scan 7")
+plot(plist, type="h", xlab="m/z",ylab="Intensity")
 dev.off()
 
 pl<-peaks(my.data,7)
