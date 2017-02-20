@@ -21,7 +21,8 @@ my.gene<-getBM(c('chromosome_name','start_position','end_position'),filters = c(
 
 # get snp tranck on the plot
 
-snpmart <- useMart("snp",dataset="hsapiens_snp")
+#snpmart <- useMart("snp",dataset="hsapiens_snp")
+snpmart <- useMart("ENSEMBL_MART_SNP",dataset="hsapiens_snp") #updating database name
 
 
 #snps<-getBM(c('refsnp_id','allele','chrom_start','clinical_significance'),filters = c('chr_name','chrom_start','chrom_end'), values = list(my.gene$chromosome_name,my.gene$start_position,my.gene$end_position), mart = snpmart)
