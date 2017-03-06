@@ -72,9 +72,11 @@ seqlevels(txdb, force=TRUE) <- c("chr17")
 genelist <- genes(txdb)
 
 genehits<-findOverlaps(peaks,genelist)
-genelist[unique(genehits@subjectHits)]
 
-gids <- genelist[unique(genehits@subjectHits)]$gene_id
+#genelist[unique(genehits@subjectHits)] #earlier versions used subjectHits slot for marking the covered genes
+genelist[unique(genehits@to)]
+
+gids <- genelist[unique(genehits@to)]$gene_id
 
 #window(genelist, start=start(large.range),end=end(large.range))
 cols <- c("GENEID","TXNAME","TXCHROM","TXSTRAND","TXSTART","TXEND")
@@ -82,7 +84,8 @@ cols <- c("GENEID","TXNAME","TXCHROM","TXSTRAND","TXSTART","TXEND")
 gene.info<-select(txdb, gids, cols, keytype="GENEID")
 
 vals <- list(gene_id="672")
-gene.range <- genes(txdb,vals)
+gene.range <- genes(txdb,filter=vals)
+
 
 library(ggbio)
 p.ideo <- Ideogram(genome = "hg18",which=gene.range)
@@ -113,6 +116,11 @@ vcf.data <- readVcf(vcfFile, "hg18")
 vcf.range <- as(vcf.data, "VRanges")
 
 snps <- autoplot(vcf.range, which = gene.range, geom = "rect", arrow = FALSE)
-trks <- tracks(Ideogram=p.ideo + xlim(GRanges("chr17", IRanges(min(start(ranges(peaks))), max(end(ranges(peaks)))))),Genes=gene.mods,Reads=reads,SNPs=snps,main="Reads in thse best covered region")
+snps
+trks <- tracks(Ideogram=p.ideo + xlim(GRanges("chr17", IRanges(min(start(ranges(peaks))), max(end(ranges(peaks)))))),
+               Genes=gene.mods,
+               Reads=reads,
+#               SNPs=snps, # plotting SNPs is broken in ggbio right now
+               main="Reads in thse best covered region")
 
 trks
