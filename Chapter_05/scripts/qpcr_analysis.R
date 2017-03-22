@@ -81,8 +81,15 @@ naive.info$fdata.name
 naive.info$sample
 naive.info$target
 naive.info$position
-naive.rdml$GetFData(naive.info,data.type="mdp")
-matplot(naive.rdml$GetFData(naive.info[naive.info$target=="18s",],data.type="adp"),type="l")
+
+# # This is for version before ver 0.9-3
+# # parameter data.type was renamed to dp.type
+# naive.rdml$GetFData(naive.info,data.type="mdp")
+# matplot(naive.rdml$GetFData(naive.info[naive.info$target=="18s",],data.type="adp"),type="l")
+
+naive.rdml$GetFData(naive.info,dp.type="mdp")
+matplot(naive.rdml$GetFData(naive.info[naive.info$target=="18s",],dp.type="adp"),type="l")
+
 
 
 ## model18S<-modlist(calib$qPCR$"18s RNA"$unkn,fluo=2:24)
@@ -199,7 +206,10 @@ naive.info <- naive.rdml$AsTable()
 sel.info <- naive.info[grep("(koA 4 h)|(wt 4 h)",naive.info$sample),]
 sel.info <- sel.info[order(sel.info$target,sel.info$sample),]
 
-sel.dat <- naive.rdml$GetFData(sel.info,data.type="adp")
+# # This is for version before ver 0.9-3
+# # parameter data.type was renamed to dp.type
+# sel.dat <- naive.rdml$GetFData(sel.info,data.type="adp")
+sel.dat <- naive.rdml$GetFData(sel.info,dp.type="adp")
 colnames(sel.dat)
 
 
@@ -226,7 +236,11 @@ all.info <- naive.info[grep("(24 h)|(48 h)",naive.info$sample,invert=T),]
 all.info$sample <- sub(" 4 h"," 04 h",all.info$sample)
 all.info <- all.info[order(all.info$target,all.info$sample),]
 all.info[,5:7]
-all.dat <- naive.rdml$GetFData(all.info,data.type="adp")
+
+# # This is for version before ver 0.9-3
+# # parameter data.type was renamed to dp.type
+# all.dat <- naive.rdml$GetFData(all.info,data.type="adp")
+all.dat <- naive.rdml$GetFData(all.info,dp.type="adp")
 colnames(all.dat)
 
 
@@ -276,8 +290,9 @@ arrows(1:3-0.1,all.res2[11,1:3],1:3-0.1,all.res2[12,1:3], length=0.05, angle=90,
 points(1:3+0.1,all.res2[7,4:6],col="blue")
 arrows(1:3+0.1,all.res2[11,4:6],1:3+0.1,all.res2[12,4:6], length=0.05, angle=90, code=3,col="blue")
 
-legend(2.8,1.5,c("KO A","KO B"),text.col=c("black","blue"),lty=1,col=c("black","blue"))
- 
+#legend(2.8,1.5,c("KO A","KO B"),text.col=c("black","blue"),lty=1,col=c("black","blue"))
+legend(2.3,50,c("KO A","KO B"),text.col=c("black","blue"),lty=1,col=c("black","blue"))
+
 
 # Meltcurve analysis
 
@@ -289,7 +304,10 @@ library(RDML)
 
 naive.rdml <- RDML$new("qPCR_data_naive_18S_IL2.rdml")
 naive.info <- naive.rdml$AsTable()
-naive <- naive.rdml$GetFData(naive.info,data.type="mdp")
+# # This is for version before ver 0.9-3
+# # parameter data.type was renamed to dp.type
+# naive <- naive.rdml$GetFData(naive.info,data.type="mdp")
+naive <- naive.rdml$GetFData(naive.info,dp.type="mdp")
 
 library(qpcR)
 
