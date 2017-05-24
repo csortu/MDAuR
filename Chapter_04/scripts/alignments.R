@@ -3,9 +3,6 @@ library(GenomicAlignments)
 projectDir <- getwd() # set the directory here to where you opened /home/ortutay/tmp/1
 alnFiles <- list.files(path=projectDir,pattern="*bowtie2.bam",full.names=T)
 
-## Note: if you are using Bioconductor version 14, paired with R 3.1, you should also load the following library. You do not need to load this library, and it will not be available to you, if you are using Bioconductor version 13, paired with R 3.0.x.
-## library(GenomicAlignments)
-
 aln <- readGAlignments(alnFiles)
 aln
 
@@ -30,8 +27,14 @@ table(seqnames(aln2))
 # see the distribution of original fragment lengths
 isProperPair(aln2)
 aln2.p<-aln2[isProperPair(aln2)]
-plot(density(end(ranges(right(aln2.p)))-start(ranges(left(aln2.p)))),main="Fragment length distribution")
 
+# Older versions of GenomicAlignments package has right() and left() functions for picking up the correcponding paired reads
+# These were dropped in 2017 spring
+# It can be replaced with first() and last() functions
+#plot(density(end(ranges(right(aln2.p)))-start(ranges(left(aln2.p)))),main="Fragment length distribution")
+plot(density(abs(end(ranges(first(aln2.p))) - 
+               start(ranges(last(aln2.p))))),
+     main="Fragment length distribution")
 
 cov2 <- coverage(aln2)
 cov2
