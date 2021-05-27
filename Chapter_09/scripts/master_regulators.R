@@ -26,24 +26,37 @@ names(target.tf.probes)<-c("SPI1","GATA3","MAF","ZBTB7B")
 library(RTN)
 
 annot2<-read.csv("annot.csv",row.names=1)
-tf.rtni<-new("TNI", gexp=exprs(eset.tf),transcriptionFactors=target.tf.probes)
-tf.rtni.pp<-tni.preprocess(tf.rtni,gexpIDs=annot2)
-tf.rtni.per<-tni.permutation(tf.rtni.pp,estimator='kendall',pValueCutoff=0.01)
-tf.rtni.boot<-tni.bootstrap(tf.rtni.per,estimator='kendall',consensus=95)
+
+# This initialization now obsolete!
+# tf.rtni<-new("TNI", gexp=exprs(eset.tf),
+#              transcriptionFactors=target.tf.probes)
+
+# This is the new way now:
+tf.rtni <- tni.constructor(exprs(eset.tf),target.tf.probes,
+                           rowAnnotation=annot2)
+
+#tf.rtni.pp<-tni.preprocess(tf.rtni,gexpIDs=annot2)
+tf.rtni.pp<-tni.preprocess(tf.rtni) # gexpIDs is not used anymore here
+tf.rtni.per<-tni.permutation(tf.rtni.pp,estimator='kendall',
+                             pValueCutoff=0.01)
+
+# tf.rtni.boot<-tni.bootstrap(tf.rtni.per,estimator='kendall',
+#                             consensus=95)
+tf.rtni.boot<-tni.bootstrap(tf.rtni.per,
+                            consensus=95) # estimator is not used anymore here
 tf.rtni.dpi<-tni.dpi.filter(tf.rtni.boot)
 
 tni.get(tf.rtni.dpi,what="summary")
 
+# g<-tni.graph(tf.rtni)
+# We have a new way to get the graph from the tni object
 
-tf.rtni<-new("TNI", gexp=exprs(eset.tf),transcriptionFactors=target.tf.probes)
-tf.rtni<-tni.preprocess(tf.rtni,gexpIDs=annot2)
-tf.rtni<-tni.permutation(tf.rtni,estimator='kendall',pValueCutoff=0.01)
-tf.rtni<-tni.bootstrap(tf.rtni,estimator='kendall',consensus=95)
-tf.rtni<-tni.dpi.filter(tf.rtni)
+g<-tni.graph(tf.rtni.dpi, tnet="dpi", gtype="rmap",
+             regulatoryElements=target.tf.probes)
 
-tni.get(tf.rtni,what="summary")
+library(igraph)
 
-g<-tni.graph(tf.rtni)
 V(g)$label<-as.character(annot2[annot2$PROBEID %in% V(g)$name,"SYMBOL"])
 plot(g,vertex.size=20)
+tkplot(g)
 

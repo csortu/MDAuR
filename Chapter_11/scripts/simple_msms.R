@@ -1,3 +1,9 @@
+# Warning! For whatever reason, this scripts does not like
+# RStudio. If you try to run the code bleow, your R session will probably
+# crash at openMSfile()
+# If you run the same code in vanilla R, then it works without problem
+# The reason is not clear, so if you want to test this, use R without any GUI
+
 library(mzR)
 msfile<-'000_select.mzXML'
 
