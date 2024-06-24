@@ -121,14 +121,21 @@ abs.mod<-modlist(abs.dat,fluo=2:31)
 plot(abs.mod,col=rep(1:10,each=3))
 
 
+class(abs.mod) <- "modlist"
 
-abs.pars<-pcrbatch(abs.mod,group=rep(1:10,each=3),names="first")
+abs.pars<-pcrbatch(abs.mod,
+                   group=rep(1:10,each=3),
+                   names="first")
+
 
 abs.pars[c(8,15),]
 threshold <- mean(as.numeric(abs.pars[abs.pars$Vars =="sig.fluo",-1]))
 
 
-abs.pars.thres<-pcrbatch(abs.mod,group=rep(1:10,each=3),thres=threshold,names="first")
+abs.pars.thres<-pcrbatch(abs.mod,
+                         group=rep(1:10,each=3),
+                         thres=threshold,
+                         names="first")
 
 abs.pars.thres[c(8,11),]
 
@@ -136,7 +143,7 @@ abs.pars.thres[c(8,11),]
 
 flu.data <- data.frame(Ct=as.numeric(abs.pars.thres[11,-1]),Load=c(10^(10:5),rep(NA,4)),row.names = c(paste("RefDil",rep(0:5),sep=""),paste("Sample",rep(1:4),sep="")))
 
-flu.data$logLoad<-log10(fludata$Load)
+flu.data$logLoad<-log10(flu.data$Load)
 
 par(mfrow=c(2,1))
 plot(flu.data$Load ~ flu.data$Ct)
