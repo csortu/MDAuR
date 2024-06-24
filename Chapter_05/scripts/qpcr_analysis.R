@@ -222,12 +222,23 @@ colnames(sel.dat)
 
 library(qpcR)
 
-sel.mod <- modlist(sel.dat,fluo=2:13)
+# sel.mod <- modlist(sel.dat,fluo=2:13)
 
 #sel.pars <- pcrbatch(sel.mod,group=rep(1:4,each=3),names="first")
 #sel.ratio <- ratiocalc(sel.pars,group=c("rc","rs","gc","gs"))
 
-sel.pars <- pcrbatch(sel.mod)
+#sel.pars <- pcrbatch(sel.mod)
+
+
+# Latest version of pcrbatch() has issues with handling data 
+# with multiple class labels. 
+# Here we are falling back to use the data frame
+
+class(sel.dat) <- "data.frame"
+names(sel.dat)[1] <- 'Cycles'
+sel.pars <- pcrbatch(sel.dat,
+                     cyc = 1,
+                     fluo=2:13)
 
 ## replicates <- c("rc","rc","rc","rs","rs","rs","gc","gc","gc","gs","gs","gs")
 
@@ -276,8 +287,16 @@ colnames(all.dat)
 
 ## names(all.dat) <- c("Cycle",paste(rep(c("18s","Il2"),each=27),".",rep(c("WT","KoA","KoB"),each=9),".",rep(c("0h","4h","12h"),each=3),".",1:3,sep=""))
 
-all.mod <- modlist(all.dat,fluo=2:55)
-all.pars <- pcrbatch(all.mod)
+# all.mod <- modlist(all.dat,fluo=2:55)
+# all.pars <- pcrbatch(all.mod)
+
+# Latest version of pcrbatch() has issues with handling data 
+# with multiple class labels. 
+# Here we are falling back to use the data frame
+class(all.dat) <- "data.frame"
+names(all.dat)[1] <- 'Cycles'
+
+all.pars <- pcrbatch(all.dat,fluo=2:55)
 
 ##groups2 <- paste(c(rep("r1",27),rep("g1",27)),rep(c(paste("s",1:6,sep=""),paste("c",1:3,sep="")),each=3),sep="")
 
@@ -324,7 +343,8 @@ head(melt[[1]])
 melt[[1]]$Tm[1]
 
 
-meltlist <- meltcurve(naive[,as.vector(rbind(rep(1,39),2:40))])
+meltlist <- meltcurve(naive[,c(as.vector(rbind(rep(1,39),2:40)))],
+                      plot = FALSE)
 
 for (i in 1:length(meltlist)){
   print(meltlist[[i]]$Tm[ which(meltlist[[i]]$Area==max(meltlist[[i]]$Area,na.rm=T))])
